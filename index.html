@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>equity-analyst — AI-powered equity research platform</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+
+  :root {
+    --ink:       #1a1a1a;
+    --ink2:      #555;
+    --ink3:      #888;
+    --surface:   #ffffff;
+    --surface2:  #f7f6f3;
+    --border:    #e8e6e0;
+    --accent:    #1a6fa8;
+    --accent-bg: #e6f1fb;
+    --green:     #1a7a2e;
+    --green-bg:  #eaf3de;
+    --amber:     #854f0b;
+    --amber-bg:  #faeeda;
+    --red:       #a32d2d;
+    --red-bg:    #fcebeb;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--surface2);
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page { max-width: 820px; margin: 0 auto; }
+
+  /* Hero */
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    margin-bottom: .6rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--ink2);
+    max-width: 600px;
+    margin-bottom: 1.75rem;
+    line-height: 1.7;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .hero-stats { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+  }
+  .stat-val {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-val.green { color: var(--green); }
+  .stat-val.blue  { color: var(--accent); }
+  .stat-lbl { font-size: .72rem; color: var(--ink3); margin-top: .25rem; text-transform: uppercase; letter-spacing: .04em; }
+
+  /* Section */
+  section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.25rem;
+  }
+  section h2 {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1.25rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Pipeline */
+  .pipeline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: .25rem;
+  }
+  .pipe-step {
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+    position: relative;
+  }
+  .pipe-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    right: -8px;
+    width: 16px;
+    height: 2px;
+    background: var(--border);
+    z-index: 1;
+  }
+  .pipe-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto .5rem;
+    font-size: 18px;
+  }
+  .pi-blue   { background: var(--accent-bg); color: var(--accent); }
+  .pi-green  { background: var(--green-bg);  color: var(--green); }
+  .pi-amber  { background: var(--amber-bg);  color: var(--amber); }
+  .pi-red    { background: var(--red-bg);    color: var(--red); }
+  .pi-purple { background: #eeedfe; color: #534ab7; }
+  .pipe-label { font-size: .78rem; font-weight: 600; color: var(--ink); }
+  .pipe-sub   { font-size: .7rem; color: var(--ink3); margin-top: .15rem; }
+
+  /* Two-col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Feature list */
+  .feature-list { list-style: none; }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    padding: .45rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .88rem;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .fl-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .fl-dot.green  { background: var(--green); }
+  .fl-dot.amber  { background: var(--amber); }
+
+  /* Stack badges */
+  .stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+  .badge {
+    font-size: .75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--ink2);
+  }
+  .badge.blue   { background: var(--accent-bg); color: var(--accent); border-color: #b5d4f4; }
+  .badge.green  { background: var(--green-bg);  color: var(--green);  border-color: #c0dd97; }
+  .badge.amber  { background: var(--amber-bg);  color: var(--amber);  border-color: #fac775; }
+
+  /* Signal demo */
+  .signal-row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .84rem;
+  }
+  .signal-row:last-child { border-bottom: none; }
+  .sig-ticker {
+    font-weight: 600;
+    min-width: 72px;
+    font-size: .84rem;
+  }
+  .sig-badge {
+    font-size: .68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .sb-acting    { background: var(--red-bg);   color: var(--red); }
+  .sb-interesting { background: var(--amber-bg); color: var(--amber); }
+  .sb-combo     { background: #eeedfe; color: #534ab7; }
+  .sb-hc        { background: var(--green-bg); color: var(--green); }
+  .sig-ml {
+    margin-left: auto;
+    font-size: .75rem;
+    color: var(--ink3);
+    white-space: nowrap;
+  }
+  .sig-ml span { color: var(--accent); font-weight: 600; }
+
+  /* Backtest table */
+  .bt-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  .bt-table th {
+    text-align: left; font-size: .7rem; font-weight: 600;
+    color: var(--ink3); text-transform: uppercase; letter-spacing: .05em;
+    padding: .3rem .5rem; border-bottom: 1px solid var(--border);
+  }
+  .bt-table th:not(:first-child) { text-align: right; }
+  .bt-table td {
+    padding: .4rem .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .bt-table td:not(:first-child) { text-align: right; }
+  .bt-table tr:last-child td { border-bottom: none; }
+  .bt-table .win { color: var(--green); font-weight: 600; }
+  .bt-table .warn { color: var(--amber); }
+  .bt-table .muted { color: var(--ink3); }
+  .best-row td { background: var(--green-bg); }
+
+  /* Quote */
+  .quote-block {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    font-size: .9rem;
+    color: var(--ink2);
+    line-height: 1.65;
+    margin-top: 1rem;
+  }
+  .quote-block strong { color: var(--ink); }
+
+  footer {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--ink3);
+    margin-top: 2.5rem;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-tag">Personal project · 2025–2026</div>
+  <h1>equity&#8209;analyst — <span>AI‑powered equity research platform</span></h1>
+  <p class="hero-sub">
+    An end-to-end automated system that analyses 47 ASX and US stocks every morning,
+    generates ML-scored trade signals, and delivers prioritised research reports with
+    specific entry, stop, and target levels — before market open.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-val blue">47</div>
+      <div class="stat-lbl">stocks analysed daily</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val green">73%</div>
+      <div class="stat-lbl">backtested win rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">156</div>
+      <div class="stat-lbl">ML features</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">319</div>
+      <div class="stat-lbl">automated tests</div>
+    </div>
+  </div>
+</div>
+
+<!-- Pipeline -->
+<section>
+  <h2>Daily pipeline — runs at 7:30am via cron</h2>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-icon pi-blue">📈</div>
+      <div class="pipe-label">Price fetch</div>
+      <div class="pipe-sub">yfinance OHLCV + macro</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon pi-amber">📰</div>
+      <div class="pipe-label">News fetch</div>
+      <div class="pipe-sub">NewsAPI batch</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon pi-purple">🤖</div>
+      <div class="pipe-label">ML ensemble</div>
+      <div class="pipe-sub">RF + LGBM + Panel</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon pi-blue">✦</div>
+      <div class="pipe-label">Claude analysis</div>
+      <div class="pipe-sub">Haiku per stock</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon pi-green">📊</div>
+      <div class="pipe-label">HTML report</div>
+      <div class="pipe-sub">sector heatmap + badges</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon pi-amber">✉️</div>
+      <div class="pipe-label">Email alert</div>
+      <div class="pipe-sub">signals + open P&L</div>
+    </div>
+  </div>
+</section>
+
+<!-- How Claude is used -->
+<section>
+  <h2>How Claude is used</h2>
+  <div class="two-col">
+    <div>
+      <ul class="feature-list">
+        <li><div class="fl-dot"></div><div>Each stock gets a structured prompt with price action, 50+ signal states, ML ensemble score, macro context (RBA rate, VIX, yield curve, AUD/USD), and recent news headlines</div></li>
+        <li><div class="fl-dot"></div><div>Claude returns a confidence score (1–5), watch level (acting / interesting / monitor), key catalysts, risk factors, and a specific trade idea with entry, stop, and target</div></li>
+        <li><div class="fl-dot"></div><div>Fully agentic — no human in the loop. 47 stocks analysed, report generated, and email sent in ~35 minutes</div></li>
+        <li><div class="fl-dot green"></div><div>Upcoming earnings dates and EPS results are injected into the prompt automatically, giving Claude context on near-term catalysts</div></li>
+      </ul>
+    </div>
+    <div>
+      <div style="background:var(--surface2);border-radius:8px;padding:1rem;font-size:.78rem;font-family:monospace;color:var(--ink2);line-height:1.7;border:1px solid var(--border)">
+        <span style="color:var(--ink3)">// Prompt excerpt — BHP.AX</span><br>
+        PRICE: $58.42 (–1.2% today)<br>
+        SIGNALS: 3 bearish signals active<br>
+        ML ENSEMBLE: 0.316 BEARISH<br>
+        &nbsp;&nbsp;RF: 0.42 | LGBM: 0.44 | Panel: 0.18<br>
+        MACRO: VIX 18.2, COPX –2.1%<br>
+        EARNINGS: FY26 results in 87 days<br>
+        <br>
+        <span style="color:var(--ink3)">// Claude response</span><br>
+        Watch: <span style="color:var(--amber)">interesting</span> | Conf: 3/5<br>
+        Trade: short $58.50 stop $60.20<br>
+        target $54.80 (R:R 2.1)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Signal sample -->
+<section>
+  <h2>Sample daily signals</h2>
+  <div class="signal-row">
+    <span class="sig-ticker">XRO.AX</span>
+    <span class="sig-badge sb-acting">Acting</span>
+    <span class="sig-badge sb-combo">🎯 Combo 3/4</span>
+    <span>4-factor momentum signal firing</span>
+    <span class="sig-ml">RF <span>0.731</span></span>
+  </div>
+  <div class="signal-row">
+    <span class="sig-ticker">ANZ.AX</span>
+    <span class="sig-badge sb-interesting">Interesting</span>
+    <span class="sig-badge sb-hc">⚡ High conviction</span>
+    <span>trend + relative strength confluence</span>
+    <span class="sig-ml">Ensemble <span>0.661</span></span>
+  </div>
+  <div class="signal-row">
+    <span class="sig-ticker">DXS.AX</span>
+    <span class="sig-badge sb-interesting">Interesting</span>
+    <span>new addition · robust walk-forward</span>
+    <span class="sig-ml">RF <span>0.607</span></span>
+  </div>
+  <div class="signal-row">
+    <span class="sig-ticker">RIO.AX</span>
+    <span class="sig-badge" style="background:var(--red-bg);color:var(--red)">Bearish signal</span>
+    <span>bearish trend · macro risk regime elevated</span>
+    <span class="sig-ml">Ensemble <span style="color:var(--red)">0.332</span></span>
+  </div>
+</section>
+
+<!-- Backtest + ML -->
+<div class="two-col">
+  <section style="margin-bottom:0">
+    <h2>Backtested strategies (3 years)</h2>
+    <table class="bt-table">
+      <thead><tr><th>Strategy</th><th>Trades</th><th>Win%</th><th>Avg R</th></tr></thead>
+      <tbody>
+        <tr class="best-row">
+          <td><strong>Refined 3/4 combo</strong></td>
+          <td>15</td>
+          <td class="win">73.3%</td>
+          <td class="win">+0.51R</td>
+        </tr>
+        <tr>
+          <td>Stoch + MACD pair</td>
+          <td>13</td>
+          <td class="win">61.5%</td>
+          <td class="win">+0.36R</td>
+        </tr>
+        <tr>
+          <td>Death cross + double top</td>
+          <td>88</td>
+          <td class="warn">47.7%</td>
+          <td class="warn">+0.18R</td>
+        </tr>
+        <tr>
+          <td class="muted">Buy &amp; hold ^AXJO</td>
+          <td class="muted">—</td>
+          <td class="muted">—</td>
+          <td class="muted">+3.4%/yr</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section style="margin-bottom:0">
+    <h2>ML ensemble — 48 tickers</h2>
+    <ul class="feature-list">
+      <li><div class="fl-dot blue"></div><div><strong>RF per-ticker</strong> — avg AUC 0.534, 23/48 tickers AUC &gt;0.55</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>LightGBM per-ticker</strong> — avg AUC 0.550, 24/48 &gt;0.55</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>Panel model</strong> — LightGBM + stock fixed effects, 32k rows</div></li>
+      <li><div class="fl-dot green"></div><div>Top features: relative strength, trend spread, and proprietary macro interaction terms</div></li>
+      <li><div class="fl-dot green"></div><div>Walk-forward validation every Friday — 19 robust, 15 moderate, 14 overfit tickers</div></li>
+    </ul>
+  </section>
+</div>
+
+<br>
+
+<!-- Tech stack -->
+<section>
+  <h2>Tech stack</h2>
+  <div style="margin-bottom:.75rem">
+    <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">AI / ML</div>
+    <div class="stack-grid">
+      <span class="badge blue">Claude Haiku (Anthropic API)</span>
+      <span class="badge blue">scikit-learn Random Forest</span>
+      <span class="badge blue">LightGBM</span>
+      <span class="badge blue">Panel model (stock fixed effects)</span>
+    </div>
+  </div>
+  <div style="margin-bottom:.75rem">
+    <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">Data</div>
+    <div class="stack-grid">
+      <span class="badge green">Python 3.11</span>
+      <span class="badge green">yfinance</span>
+      <span class="badge green">pandas + numpy</span>
+      <span class="badge green">SQLite</span>
+      <span class="badge green">NewsAPI</span>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">Infrastructure</div>
+    <div class="stack-grid">
+      <span class="badge">cron (7:30am daily)</span>
+      <span class="badge">pytest (319 tests)</span>
+      <span class="badge">GitHub Actions CI</span>
+      <span class="badge">python-dotenv</span>
+      <span class="badge">HTML/CSS report generation</span>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<div class="quote-block">
+  <strong>What I learned:</strong> Building a production ML trading system end-to-end —
+  from raw price data to actionable signals — requires as much work on data quality,
+  signal validation, and walk-forward testing as on the models themselves.
+  The highest-edge strategy (73% win rate) uses a small set of confirmed signals,
+  not the full ML feature set. <strong>Claude acts as the synthesis layer</strong> —
+  turning structured signal data into a coherent trade thesis with specific levels.
+</div>
+
+<footer>
+  equity-analyst · Aditya Kant Sharma · Built 2025–2026 · Python + Claude (Anthropic)
+</footer>
+
+</div>
+</body>
+</html>
