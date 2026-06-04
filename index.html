@@ -585,6 +585,48 @@
       <span class="badge">HTML/CSS report generation</span>
     </div>
   </div>
+  <div style="margin-top:.75rem">
+    <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">MLOps</div>
+    <div class="stack-grid">
+      <span class="badge blue">MLflow experiment tracking</span>
+      <span class="badge blue">FastAPI inference endpoint</span>
+      <span class="badge blue">Model registry + versioning</span>
+      <span class="badge blue">Swagger / OpenAPI docs</span>
+    </div>
+  </div>
+</section>
+
+<!-- API endpoint -->
+<section>
+  <h2>REST API — served ML model</h2>
+  <div class="two-col">
+    <div>
+      <ul class="feature-list">
+        <li><div class="fl-dot blue"></div><div>FastAPI inference endpoint — query any ticker and get an ensemble probability score in real time</div></li>
+        <li><div class="fl-dot blue"></div><div>Supports single-ticker and batch inference (up to 50 tickers per request)</div></li>
+        <li><div class="fl-dot blue"></div><div>Walk-forward reliability verdict returned with every prediction — <em>robust / moderate / overfit</em></div></li>
+        <li><div class="fl-dot green"></div><div>Auto-generated Swagger UI at <code>/docs</code> — full interactive documentation</div></li>
+        <li><div class="fl-dot green"></div><div>MLflow tracks every training run — compare AUC across retrains, register best model version</div></li>
+      </ul>
+    </div>
+    <div style="background:var(--surface2);border-radius:8px;padding:1rem;font-size:.76rem;font-family:monospace;color:var(--ink2);line-height:1.9;border:1px solid var(--border)">
+      <span style="color:var(--ink3)"># Single ticker</span><br>
+      GET /predict/AAPL<br><br>
+      <span style="color:var(--ink3)"># Response</span><br>
+      {<br>
+      &nbsp;&nbsp;"ticker": "AAPL",<br>
+      &nbsp;&nbsp;"prob": 0.6105,<br>
+      &nbsp;&nbsp;"signal": "Lean bullish",<br>
+      &nbsp;&nbsp;"confidence": "medium",<br>
+      &nbsp;&nbsp;"walk_forward": "robust",<br>
+      &nbsp;&nbsp;"rf_auc": 0.5106,<br>
+      &nbsp;&nbsp;"panel_auc": 0.6451<br>
+      }<br><br>
+      <span style="color:var(--ink3)"># Batch (50 tickers max)</span><br>
+      POST /predict<br>
+      {"tickers": ["AAPL","ANZ.AX","NVDA"]}
+    </div>
+  </div>
 </section>
 
 <!-- Quote -->
@@ -595,6 +637,8 @@
   The highest-edge strategy (73% win rate) uses a small set of confirmed signals,
   not the full ML feature set. <strong>Claude acts as the synthesis layer</strong> —
   turning structured signal data into a coherent trade thesis with specific levels.
+  Adding MLflow and FastAPI transformed the project from a batch script into
+  a deployable ML service.
 </div>
 
 <footer>
