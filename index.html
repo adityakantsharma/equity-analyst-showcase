@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>equity-analyst — AI-powered equity research platform</title>
+<title>equity-analyst  --  AI-powered equity research platform</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
 
@@ -273,27 +273,27 @@
 <!-- Hero -->
 <div class="hero">
   <div class="hero-tag">Personal project · 2025–2026</div>
-  <h1>equity&#8209;analyst — <span>AI‑powered equity research platform</span></h1>
+  <h1>equity&#8209;analyst  --  <span>AI‑powered equity research platform</span></h1>
   <p class="hero-sub">
     An end-to-end automated system that analyses ASX and US stocks every morning,
     generates ML-scored trade signals, and delivers prioritised research reports with
-    specific entry, stop, and target levels — before market open.
+    specific entry, stop, and target levels  --  before market open.
   </p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-val blue">10</div>
+      <div class="stat-val blue">13</div>
       <div class="stat-lbl">pipeline steps daily</div>
     </div>
     <div class="stat">
-      <div class="stat-val green">73%</div>
-      <div class="stat-lbl">backtested win rate</div>
+      <div class="stat-val green">3yr</div>
+      <div class="stat-lbl">walk-forward validated</div>
     </div>
     <div class="stat">
       <div class="stat-val">156</div>
       <div class="stat-lbl">ML features</div>
     </div>
     <div class="stat">
-      <div class="stat-val">319</div>
+      <div class="stat-val">370</div>
       <div class="stat-lbl">automated tests</div>
     </div>
   </div>
@@ -301,47 +301,29 @@
 
 <!-- Pipeline -->
 <section>
-  <h2>Daily pipeline — runs at 7:30am via cron</h2>
-  <div class="pipeline">
-    <div class="pipe-step">
-      <div class="pipe-icon pi-blue">📈</div>
-      <div class="pipe-label">Price fetch</div>
-      <div class="pipe-sub">yfinance OHLCV + macro</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-amber">📰</div>
-      <div class="pipe-label">News fetch</div>
-      <div class="pipe-sub">NewsAPI batch</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-purple">🤖</div>
-      <div class="pipe-label">ML ensemble</div>
-      <div class="pipe-sub">RF + LGBM + Panel</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-blue">✦</div>
-      <div class="pipe-label">Claude Haiku</div>
-      <div class="pipe-sub">per-stock analysis</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-purple">🧠</div>
-      <div class="pipe-label">Claude Sonnet</div>
-      <div class="pipe-sub">portfolio manager</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-green">📊</div>
-      <div class="pipe-label">HTML report</div>
-      <div class="pipe-sub">heatmap + PM section</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-blue">🔬</div>
-      <div class="pipe-label">MLflow</div>
-      <div class="pipe-sub">drift + registry</div>
-    </div>
-    <div class="pipe-step">
-      <div class="pipe-icon pi-amber">✉️</div>
-      <div class="pipe-label">Email alert</div>
-      <div class="pipe-sub">signals + open P&L</div>
+  <h2>Daily pipeline  --  runs at 7:30am via cron</h2>
+  <div class="two-col">
+    <ol class="feature-list" style="list-style:decimal;padding-left:1.2rem">
+      <li><div>Price fetch  --  yfinance OHLCV for all 48 tickers</div></li>
+      <li><div>News fetch  --  yfinance + Google News RSS (no API key, unlimited)</div></li>
+      <li><div>AI analysis  --  Claude Haiku per stock, signals + ML score injected into prompt</div></li>
+      <li><div>Ensemble ML scoring  --  RF + LightGBM + Panel, walk-forward validated</div></li>
+      <li><div>Bull/Bear debate  --  Claude Sonnet argues for and against each candidate; judge returns TAKE/SKIP/REDUCE_SIZE</div></li>
+      <li><div>Champion/Challenger  --  both v1.0 and v2.0 strategies decide on identical candidates; divergences logged for comparison</div></li>
+      <li><div>Portfolio Manager  --  Claude Sonnet ranks actions with debate verdicts + CGT awareness</div></li>
+      <li><div>Report generation  --  HTML + JSON daily report with sector heatmap, ML scores, paper trades</div></li>
+      <li><div>Outcome backfill  --  scores debate + strategy logs once their 10-day horizon matures</div></li>
+      <li><div>Drift check + MLflow logging  --  detects model decay, promotes if AUC improves</div></li>
+      <li><div>Alerts + email  --  morning email with PM recommendation + system metrics panel</div></li>
+      <li><div><em>Fridays:</em> walk-forward validation (48 tickers, 3yr history, 10-day embargo gap)</div></li>
+      <li><div><em>Fridays:</em> signal accuracy cache refresh  --  pre-live gate status updated</div></li>
+    </ol>
+    <div>
+      <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border);font-size:.8rem">
+        <div style="font-weight:600;margin-bottom:.5rem;color:var(--ink2)">Why 13 steps?</div>
+        <p style="margin:.3rem 0;color:var(--ink3)">Each step is independent and fails gracefully. If the debate agent hits a rate limit, the PM still runs without verdicts. If backfill finds no mature decisions, it exits cleanly. The pipeline always produces a report.</p>
+        <p style="margin:.3rem 0;color:var(--ink3)">The measurement steps (6, 9, 13) are what separate this from a signal screener. Every decision is logged, scored, and compared. Strategy changes are evaluated on data, not feel.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -362,7 +344,7 @@
       <!-- Subject -->
       <div style="padding:1rem 1.25rem .5rem">
         <div style="font-size:10px;color:#999;margin-bottom:.2rem">Subject</div>
-        <div style="font-size:13px;font-weight:500;color:#1a1a1a;line-height:1.4">equity-analyst 4 Jun — 🔴 1 Acting · 🟡 41 Interesting · open +2.67R (+$1,335)</div>
+        <div style="font-size:13px;font-weight:500;color:#1a1a1a;line-height:1.4">equity-analyst 4 Jun  --  🔴 1 Acting · 🟡 41 Interesting · open +2.67R (+$1,335)</div>
       </div>
       <div style="height:1px;background:#e8e6e0;margin:0 1.25rem"></div>
 
@@ -394,7 +376,7 @@
             <span style="font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#185fa5">🤖 Portfolio Manager</span>
             <span style="font-size:9px;color:#aaa">Claude Sonnet · 4 Jun 2026</span>
           </div>
-          <p style="font-size:11px;color:#333;margin:0 0 .6rem;line-height:1.5">Tech sector leading +4% with AAPL refined combo 3/4 on a robust ticker. XRO approaching target — trail stop to protect gains.</p>
+          <p style="font-size:11px;color:#333;margin:0 0 .6rem;line-height:1.5">Tech sector leading +4% with AAPL technical combo signal on a robust ticker. XRO approaching target  --  trail stop to protect gains.</p>
 
           <!-- Action 1: ENTER -->
           <div style="display:flex;gap:6px;padding:.45rem .6rem;background:#eaf3de;border-radius:5px;margin-bottom:.35rem;align-items:flex-start">
@@ -402,11 +384,11 @@
             <div>
               <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:.2rem">
                 <span style="font-size:9px;font-weight:600;color:#27500a;background:#eaf3de;border:1px solid #3b6d1140;padding:1px 6px;border-radius:6px">✅ ENTER</span>
-                <span style="font-size:11px;font-weight:600;color:#1a1a1a">AAPL</span>
-                <span style="font-size:9px;color:#888">entry $310.26 · stop $300.82 · target $329.14 · risk 1%</span>
+                <span style="font-size:11px;font-weight:600;color:#1a1a1a">TICKER_A</span>
+                <span style="font-size:9px;color:#888">entry $xxx.xx · stop $xxx.xx · target $xxx.xx · risk 1%</span>
                 <span style="font-size:9px;color:#aaa;background:#f0f0f0;padding:1px 4px;border-radius:3px">TODAY</span>
               </div>
-              <div style="font-size:10px;color:#444">Refined combo 3/4, robust walk-forward, Tech +4% tailwind. Strongest setup today.</div>
+              <div style="font-size:10px;color:#444">Technical combo signal, walk-forward validated, sector tailwind. Strongest setup today.</div>
             </div>
           </div>
 
@@ -416,7 +398,7 @@
             <div>
               <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:.2rem">
                 <span style="font-size:9px;font-weight:600;color:#7d5a00;background:#fff8e1;border:1px solid #7d5a0040;padding:1px 6px;border-radius:6px">↕️ TRAIL STOP</span>
-                <span style="font-size:11px;font-weight:600;color:#1a1a1a">XRO.AX</span>
+                <span style="font-size:11px;font-weight:600;color:#1a1a1a">TICKER_B</span>
                 <span style="font-size:9px;color:#aaa;background:#f0f0f0;padding:1px 4px;border-radius:3px">THIS WEEK</span>
               </div>
               <div style="font-size:10px;color:#444">Target $82.00 is $1.05 away. Trail stop to $79.50 to lock in +1.4R minimum.</div>
@@ -429,7 +411,7 @@
             <div>
               <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:.2rem">
                 <span style="font-size:9px;font-weight:600;color:#555;background:#f5f5f5;border:1px solid #55555540;padding:1px 6px;border-radius:6px">👁 WATCH</span>
-                <span style="font-size:11px;font-weight:600;color:#1a1a1a">DXS.AX</span>
+                <span style="font-size:11px;font-weight:600;color:#1a1a1a">TICKER_C</span>
                 <span style="font-size:9px;color:#aaa;background:#f0f0f0;padding:1px 4px;border-radius:3px">MONITOR</span>
               </div>
               <div style="font-size:10px;color:#444">2/4 signals but Real Estate -4% this week. Wait for sector recovery.</div>
@@ -452,13 +434,13 @@
             <span style="margin-left:auto;font-size:10px;color:#999">conf 4/5</span>
           </div>
           <div style="display:flex;align-items:center;gap:7px;padding:.5rem .75rem;border-bottom:1px solid #e8e6e0">
-            <span style="font-size:12px;font-weight:600;color:#1a1a1a;min-width:58px">ANZ.AX</span>
+            <span style="font-size:12px;font-weight:600;color:#1a1a1a;min-width:58px">ASX_TICKER</span>
             <span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:8px;background:#faeeda;color:#854f0b">Interesting</span>
             <span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:8px;background:#eaf3de;color:#1a7a2e">⚡ High conviction</span>
             <span style="margin-left:auto;font-size:10px;color:#999">ML 0.66</span>
           </div>
           <div style="display:flex;align-items:center;gap:7px;padding:.5rem .75rem">
-            <span style="font-size:12px;font-weight:600;color:#1a1a1a;min-width:58px">RIO.AX</span>
+            <span style="font-size:12px;font-weight:600;color:#1a1a1a;min-width:58px">ASX_TICKER</span>
             <span style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:8px;background:#e6f1fb;color:#0c447c">Bearish</span>
             <span style="font-size:10px;color:#666">macro risk regime elevated</span>
             <span style="margin-left:auto;font-size:10px;color:#a32d2d">ML 0.33</span>
@@ -476,28 +458,36 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:.4rem .75rem;border-top:1px solid #e8e6e0">
             <div style="font-size:11px;font-weight:500;color:#1a1a1a">XRO.AX</div>
-            <div style="font-size:11px;color:#666;text-align:center">$76.96</div>
-            <div style="font-size:11px;color:#666;text-align:center">$80.95</div>
-            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+1.62R</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+x.xxR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:.4rem .75rem;border-top:1px solid #e8e6e0">
             <div style="font-size:11px;font-weight:500;color:#1a1a1a">AAPL</div>
-            <div style="font-size:11px;color:#666;text-align:center">$310.26</div>
-            <div style="font-size:11px;color:#666;text-align:center">$315.40</div>
-            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+0.55R</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+x.xxR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:.4rem .75rem;border-top:1px solid #e8e6e0">
             <div style="font-size:11px;font-weight:500;color:#1a1a1a">NVDA</div>
-            <div style="font-size:11px;color:#666;text-align:center">$222.82</div>
-            <div style="font-size:11px;color:#666;text-align:center">$228.50</div>
-            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+0.52R</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+x.xxR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:.4rem .75rem;border-top:1px solid #e8e6e0">
-            <div style="font-size:11px;font-weight:500;color:#1a1a1a">MQG.AX</div>
-            <div style="font-size:11px;color:#666;text-align:center">$235.24</div>
-            <div style="font-size:11px;color:#666;text-align:center">$238.39</div>
-            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+0.36R</div>
+            <div style="font-size:11px;font-weight:500;color:#1a1a1a">ASX_TICKER</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;color:#666;text-align:center">$xxx.xx</div>
+            <div style="font-size:11px;font-weight:500;color:#1a7a2e;text-align:right">+x.xxR</div>
           </div>
+        </div>
+
+        <!-- System Metrics panel -->
+        <div style="background:#f7f6f3;border-radius:7px;padding:.6rem .75rem;margin-bottom:.5rem;border:1px solid #e5e5e5">
+          <div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.35rem">System Metrics</div>
+          <p style="font-size:10px;margin:.1rem 0;color:#333">Signal accuracy (acting): <strong style="color:#27ae60">62%</strong> <span style="color:#999">(8 calls, gate &gt;55%) ✅</span></p>
+          <p style="font-size:10px;margin:.1rem 0;color:#333">Champion v1.0 vs challenger v2.0: <strong>3 divergences</strong> <span style="color:#999">(88% agree)</span></p>
+          <p style="font-size:10px;margin:.1rem 0;color:#333">Promotion: <strong>HOLD</strong> <span style="color:#999">need 25 divergent trades</span></p>
         </div>
 
         <div style="background:#f7f6f3;border-radius:7px;padding:.5rem .75rem;font-size:10px;color:#999;display:flex;justify-content:space-between">
@@ -515,28 +505,19 @@
 <section>
   <h2>How Claude is used</h2>
   <div class="two-col">
-    <div>
-      <ul class="feature-list">
-        <li><div class="fl-dot"></div><div>Each stock gets a structured prompt with price action, 50+ signal states, ML ensemble score, macro context (RBA rate, VIX, yield curve, AUD/USD), and recent news headlines</div></li>
-        <li><div class="fl-dot"></div><div>Claude returns a confidence score (1–5), watch level (acting / interesting / monitor), key catalysts, risk factors, and a specific trade idea with entry, stop, and target</div></li>
-        <li><div class="fl-dot"></div><div>Fully agentic — no human in the loop. 47 stocks analysed, report generated, and email sent in ~35 minutes</div></li>
-        <li><div class="fl-dot green"></div><div>Upcoming earnings dates and EPS results are injected into the prompt automatically, giving Claude context on near-term catalysts</div></li>
-      </ul>
-    </div>
-    <div>
-      <div style="background:var(--surface2);border-radius:8px;padding:1rem;font-size:.78rem;font-family:monospace;color:var(--ink2);line-height:1.7;border:1px solid var(--border)">
-        <span style="color:var(--ink3)">// Prompt excerpt — BHP.AX</span><br>
-        PRICE: $58.42 (–1.2% today)<br>
-        SIGNALS: 3 bearish signals active<br>
-        ML ENSEMBLE: 0.316 BEARISH<br>
-        &nbsp;&nbsp;RF: 0.42 | LGBM: 0.44 | Panel: 0.18<br>
-        MACRO: VIX 18.2, COPX –2.1%<br>
-        EARNINGS: FY26 results in 87 days<br>
-        <br>
-        <span style="color:var(--ink3)">// Claude response</span><br>
-        Watch: <span style="color:var(--amber)">interesting</span> | Conf: 3/5<br>
-        Trade: short $58.50 stop $60.20<br>
-        target $54.80 (R:R 2.1)
+    <ul class="feature-list">
+      <li><div class="fl-dot blue"></div><div><strong>Claude Haiku</strong>  --  stock analyst. Each morning, 48 stocks are analysed with signals, ML scores, news, and macro context injected into the prompt. Haiku produces a structured JSON verdict: watch level, confidence, key signals, and summary.</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>Claude Sonnet (Bull)</strong>  --  argues forcefully FOR each candidate trade, citing signals, momentum, and sector tailwinds.</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>Claude Sonnet (Bear)</strong>  --  argues forcefully AGAINST, citing headwinds, walk-forward reliability, and false-positive risk.</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>Claude Sonnet (Judge)</strong>  --  weighs both cases and returns TAKE / SKIP / REDUCE_SIZE with reasoning. Only candidates that survive the debate reach the portfolio manager.</div></li>
+      <li><div class="fl-dot green"></div><div><strong>Claude Sonnet (Portfolio Manager)</strong>  --  ranks the day's candidates into actionable decisions: ENTER, CLOSE, TRAIL_STOP, WATCH, SKIP. CGT-aware (flags positions within 60 days of the 12-month discount). Debate verdicts are included as second opinions.</div></li>
+    </ul>
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border);font-size:.8rem">
+      <div style="font-weight:600;margin-bottom:.5rem;color:var(--ink2)">Why multiple agents?</div>
+      <p style="margin:.3rem 0;color:var(--ink3)">A single model asked "should I take this trade?" will find reasons to say yes. Forcing separate Bull and Bear instances to argue opposite sides surfaces the bear case that confirmation bias would suppress.</p>
+      <p style="margin:.3rem 0;color:var(--ink3)">The Judge then evaluates both arguments with a clear decision rule: when genuinely uncertain, SKIP. Missing a trade costs nothing; a bad trade costs real money. The debate log tracks whether SKIP verdicts actually avoided losers.</p>
+      <div style="margin-top:.75rem;padding:.5rem .75rem;background:#e6f1fb;border-radius:6px;color:#0c447c;font-size:.75rem">
+        Models: claude-haiku-4-5 (analysis) + claude-sonnet-4-20250514 (debate + PM)
       </div>
     </div>
   </div>
@@ -544,78 +525,49 @@
 
 <!-- Signal sample -->
 <section>
-  <h2>Sample daily signals</h2>
-  <div class="signal-row">
-    <span class="sig-ticker">XRO.AX</span>
-    <span class="sig-badge sb-acting">Acting</span>
-    <span class="sig-badge sb-combo">🎯 Combo 3/4</span>
-    <span>4-factor momentum signal firing</span>
-    <span class="sig-ml">RF <span>0.731</span></span>
-  </div>
-  <div class="signal-row">
-    <span class="sig-ticker">ANZ.AX</span>
-    <span class="sig-badge sb-interesting">Interesting</span>
-    <span class="sig-badge sb-hc">⚡ High conviction</span>
-    <span>trend + relative strength confluence</span>
-    <span class="sig-ml">Ensemble <span>0.661</span></span>
-  </div>
-  <div class="signal-row">
-    <span class="sig-ticker">DXS.AX</span>
-    <span class="sig-badge sb-interesting">Interesting</span>
-    <span>new addition · robust walk-forward</span>
-    <span class="sig-ml">RF <span>0.607</span></span>
-  </div>
-  <div class="signal-row">
-    <span class="sig-ticker">RIO.AX</span>
-    <span class="sig-badge" style="background:var(--red-bg);color:var(--red)">Bearish signal</span>
-    <span>bearish trend · macro risk regime elevated</span>
-    <span class="sig-ml">Ensemble <span style="color:var(--red)">0.332</span></span>
-  </div>
-</section>
-
-<!-- Backtest + ML -->
-<div class="two-col">
-  <section style="margin-bottom:0">
-    <h2>Backtested strategies (3 years)</h2>
-    <table class="bt-table">
-      <thead><tr><th>Strategy</th><th>Trades</th><th>Win%</th><th>Avg R</th></tr></thead>
-      <tbody>
-        <tr class="best-row">
-          <td><strong>Refined 3/4 combo</strong></td>
-          <td>15</td>
-          <td class="win">73.3%</td>
-          <td class="win">+0.51R</td>
-        </tr>
-        <tr>
-          <td>Stoch + MACD pair</td>
-          <td>13</td>
-          <td class="win">61.5%</td>
-          <td class="win">+0.36R</td>
-        </tr>
-        <tr>
-          <td>Death cross + double top</td>
-          <td>88</td>
-          <td class="warn">47.7%</td>
-          <td class="warn">+0.18R</td>
-        </tr>
-        <tr>
-          <td class="muted">Buy &amp; hold ^AXJO</td>
-          <td class="muted">—</td>
-          <td class="muted">—</td>
-          <td class="muted">+3.4%/yr</td>
-        </tr>
-      </tbody>
-    </table>
+    <h2>Walk-forward validation (3 years)</h2>
+    <div class="two-col">
+      <div>
+        <p style="font-size:.85rem;color:var(--ink3);margin-bottom:.75rem">
+          Each strategy is validated using an expanding-window walk-forward methodology
+          across 3 years of price history. A 10-day embargo gap between train and test
+          prevents forward-return labels overlapping the test window (Lopez de Prado 2018, §7.4).
+        </p>
+        <ul class="feature-list">
+          <li><div class="fl-dot green"></div><div><strong>Robust</strong> -- signal fires consistently, train and validation win rates both strong. These tickers are eligible for paper trading.</div></li>
+          <li><div class="fl-dot" style="background:#f39c12"></div><div><strong>Moderate</strong> -- some signal reliability; not traded, kept on watchlist for monitoring.</div></li>
+          <li><div class="fl-dot" style="background:#c0392b"></div><div><strong>Overfit</strong> -- high train win rate, low validation win rate. Excluded from trading entirely.</div></li>
+        </ul>
+      </div>
+      <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border);font-size:.8rem">
+        <div style="font-weight:600;margin-bottom:.6rem;color:var(--ink2)">Latest walk-forward (Jun 2026, 48 tickers)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;text-align:center">
+          <div style="background:#eaf3de;border-radius:6px;padding:.5rem">
+            <div style="font-size:1.2rem;font-weight:700;color:#27500a">20</div>
+            <div style="font-size:.7rem;color:#555;text-transform:uppercase;letter-spacing:.04em">Robust</div>
+          </div>
+          <div style="background:#fef9e7;border-radius:6px;padding:.5rem">
+            <div style="font-size:1.2rem;font-weight:700;color:#854f0b">14</div>
+            <div style="font-size:.7rem;color:#555;text-transform:uppercase;letter-spacing:.04em">Moderate</div>
+          </div>
+          <div style="background:#fde8e8;border-radius:6px;padding:.5rem">
+            <div style="font-size:1.2rem;font-weight:700;color:#a32d2d">14</div>
+            <div style="font-size:.7rem;color:#555;text-transform:uppercase;letter-spacing:.04em">Overfit</div>
+          </div>
+        </div>
+        <p style="font-size:.75rem;color:var(--ink3);margin:.75rem 0 0">Runs every Friday. Panel model Test AUC 0.521 post-embargo fix. Robust list stable across 2 consecutive weekly runs.</p>
+      </div>
+    </div>
   </section>
 
   <section style="margin-bottom:0">
-    <h2>ML ensemble — 48 tickers</h2>
+    <h2>ML ensemble  --  48 tickers</h2>
     <ul class="feature-list">
-      <li><div class="fl-dot blue"></div><div><strong>RF per-ticker</strong> — avg AUC 0.534, 23/48 tickers AUC &gt;0.55</div></li>
-      <li><div class="fl-dot blue"></div><div><strong>LightGBM per-ticker</strong> — avg AUC 0.550, 24/48 &gt;0.55</div></li>
-      <li><div class="fl-dot blue"></div><div><strong>Panel model</strong> — LightGBM + stock fixed effects, 32k rows</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>RF per-ticker</strong>  --  avg AUC 0.534, 23/48 tickers AUC &gt;0.55</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>LightGBM per-ticker</strong>  --  avg AUC 0.550, 24/48 &gt;0.55</div></li>
+      <li><div class="fl-dot blue"></div><div><strong>Panel model</strong>  --  LightGBM + stock fixed effects, 32k rows</div></li>
       <li><div class="fl-dot green"></div><div>Top features: relative strength, trend spread, and proprietary macro interaction terms</div></li>
-      <li><div class="fl-dot green"></div><div>Walk-forward validation every Friday — 19 robust, 15 moderate, 14 overfit tickers</div></li>
+      <li><div class="fl-dot green"></div><div>Walk-forward validation every Friday  --  19 robust, 15 moderate, 14 overfit tickers</div></li>
     </ul>
   </section>
 </div>
@@ -624,12 +576,43 @@
 
 <!-- Tech stack -->
 <section>
+  <h2>Engineering decisions worth noting</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Champion/Challenger  --  not version-over-time</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Comparing strategy v1 (Jan-Jun) vs v2 (Jun-Dec) conflates strategy quality with market regime. Both see the same candidates on the same day. The comparison signal lives only in divergences.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: apples-to-apples beats historical comparison</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Promotion policy decoupled from engine</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Changing promotion criteria (win rate gap vs R-multiple vs statistical significance) should not require touching the comparison engine. The policy is a swappable Protocol class. Four implementations ship; the default requires both win rate AND avg R to improve.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: interface-first, tight coupling is a maintenance trap</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Bull/Bear debate  --  forced adversarial reasoning</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A single model asked "should I take this trade?" finds reasons to say yes. Separate Bull and Bear instances with assigned stances surface the bear case confirmation bias would suppress. Debate log tracks whether SKIP verdicts actually avoided losers.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: adversarial prompting over single-pass optimism</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">NewsAPI replaced with yfinance + Google News RSS</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">The 100 req/day free tier was exhausted by a 48-ticker watchlist. The next tier was $449/month. yfinance .news + Google News RSS covers the same signal for free, with no rate limits and no API key. News is context for the analyst, not the primary signal.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: right-size dependencies, cost scales with value</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
   <h2>Tech stack</h2>
   <div style="margin-bottom:.75rem">
     <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">AI / ML</div>
     <div class="stack-grid">
-      <span class="badge blue">Claude Haiku — per-stock analysis</span>
-      <span class="badge blue">Claude Sonnet — portfolio manager agent</span>
+      <span class="badge blue">Claude Haiku  --  per-stock analysis</span>
+      <span class="badge blue">Claude Sonnet  --  portfolio manager agent</span>
       <span class="badge blue">scikit-learn Random Forest</span>
       <span class="badge blue">LightGBM</span>
       <span class="badge blue">Panel model (stock fixed effects)</span>
@@ -664,21 +647,33 @@
       <span class="badge blue">FastAPI inference endpoint</span>
       <span class="badge blue">Model registry + versioning</span>
       <span class="badge blue">Swagger / OpenAPI docs</span>
+      <span class="badge blue">10-day embargo gap (Lopez de Prado)</span>
+    </div>
+  </div>
+  <div style="margin-top:.75rem">
+    <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">Strategy evaluation</div>
+    <div class="stack-grid">
+      <span class="badge green">Champion/Challenger framework</span>
+      <span class="badge green">Swappable promotion policies</span>
+      <span class="badge green">Signal accuracy report</span>
+      <span class="badge green">Outcome backfill (daily scoring)</span>
+      <span class="badge green">Strategy versioning (v1.0 / v2.0)</span>
+      <span class="badge green">Debate log + counterfactuals</span>
     </div>
   </div>
 </section>
 
 <!-- API endpoint -->
 <section>
-  <h2>REST API — served ML model</h2>
+  <h2>REST API  --  served ML model</h2>
   <div class="two-col">
     <div>
       <ul class="feature-list">
-        <li><div class="fl-dot blue"></div><div>FastAPI inference endpoint — query any ticker and get an ensemble probability score in real time</div></li>
+        <li><div class="fl-dot blue"></div><div>FastAPI inference endpoint  --  query any ticker and get an ensemble probability score in real time</div></li>
         <li><div class="fl-dot blue"></div><div>Supports single-ticker and batch inference (up to 50 tickers per request)</div></li>
-        <li><div class="fl-dot blue"></div><div>Walk-forward reliability verdict returned with every prediction — <em>robust / moderate / overfit</em></div></li>
-        <li><div class="fl-dot green"></div><div>Auto-generated Swagger UI at <code>/docs</code> — full interactive documentation</div></li>
-        <li><div class="fl-dot green"></div><div>MLflow tracks every training run — compare AUC across retrains, register best model version</div></li>
+        <li><div class="fl-dot blue"></div><div>Walk-forward reliability verdict returned with every prediction  --  <em>robust / moderate / overfit</em></div></li>
+        <li><div class="fl-dot green"></div><div>Auto-generated Swagger UI at <code>/docs</code>  --  full interactive documentation</div></li>
+        <li><div class="fl-dot green"></div><div>MLflow tracks every training run  --  compare AUC across retrains, register best model version</div></li>
       </ul>
     </div>
     <div style="background:var(--surface2);border-radius:8px;padding:1rem;font-size:.76rem;font-family:monospace;color:var(--ink2);line-height:1.9;border:1px solid var(--border)">
@@ -703,10 +698,10 @@
 
 <!-- Quote -->
 <div class="quote-block">
-  <strong>What I learned:</strong> Building a production ML trading system end-to-end —
-  from raw price data to actionable signals — requires as much work on data quality,
+  <strong>What I learned:</strong> Building a production ML trading system end-to-end  -- 
+  from raw price data to actionable signals  --  requires as much work on data quality,
   signal validation, and walk-forward testing as on the models themselves.
-  The highest-edge strategy (73% win rate) uses a small set of confirmed signals,
+  The highest-edge strategy uses a small set of confirmed signals,
   not the full ML feature set. <strong>Claude acts as the synthesis layer</strong>,
   turning structured signal data into a coherent trade thesis with specific levels.
   Adding MLflow and FastAPI transformed the project from a batch script into a deployable ML service.
@@ -716,6 +711,5 @@
   equity-analyst · Aditya Kant Sharma · Built 2025–2026 · Python + Claude (Anthropic)
 </footer>
 
-</div>
 </body>
 </html>
