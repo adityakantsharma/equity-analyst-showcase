@@ -303,26 +303,71 @@
 <section>
   <h2>Daily pipeline  --  runs at 7:30am via cron</h2>
   <div class="two-col">
-    <ol class="feature-list" style="list-style:decimal;padding-left:1.2rem">
-      <li><div>Price fetch  --  yfinance OHLCV for all 48 tickers</div></li>
-      <li><div>News fetch  --  yfinance + Google News RSS (no API key, unlimited)</div></li>
-      <li><div>AI analysis  --  Claude Haiku per stock, signals + ML score injected into prompt</div></li>
-      <li><div>Ensemble ML scoring  --  RF + LightGBM + Panel, walk-forward validated</div></li>
-      <li><div>Bull/Bear debate  --  Claude Sonnet argues for and against each candidate; judge returns TAKE/SKIP/REDUCE_SIZE</div></li>
-      <li><div>Champion/Challenger  --  both v1.0 and v2.0 strategies decide on identical candidates; divergences logged for comparison</div></li>
-      <li><div>Portfolio Manager  --  Claude Sonnet ranks actions with debate verdicts + CGT awareness</div></li>
-      <li><div>Report generation  --  HTML + JSON daily report with sector heatmap, ML scores, paper trades</div></li>
-      <li><div>Outcome backfill  --  scores debate + strategy logs once their 10-day horizon matures</div></li>
-      <li><div>Drift check + MLflow logging  --  detects model decay, promotes if AUC improves</div></li>
-      <li><div>Alerts + email  --  morning email with PM recommendation + system metrics panel</div></li>
-      <li><div><em>Fridays:</em> walk-forward validation (48 tickers, 3yr history, 10-day embargo gap)</div></li>
-      <li><div><em>Fridays:</em> signal accuracy cache refresh  --  pre-live gate status updated</div></li>
-    </ol>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#e6f1fb;color:#0c447c;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">1</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">Data collection</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Market data and news gathered for the full watchlist.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#e6f1fb;color:#0c447c;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">2</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">AI analysis</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Each stock analysed independently. Signals, ML scores, and macro context synthesised into a structured verdict.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#e6f1fb;color:#0c447c;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">3</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">Adversarial debate</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Candidate trades stress-tested by opposing AI agents before reaching the portfolio manager.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#e6f1fb;color:#0c447c;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">4</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">Portfolio management</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Ranked action list generated with position sizing, heat limits, and tax awareness.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#eaf3de;color:#1a7a2e;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">5</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">Measurement</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Every decision logged and scored as outcomes mature. Champion/challenger strategies compared on identical signals. Model drift monitored.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:.75rem">
+          <div style="min-width:28px;height:28px;border-radius:50%;background:#eaf3de;color:#1a7a2e;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:.1rem">6</div>
+          <div>
+            <div style="font-size:.85rem;font-weight:600;color:var(--ink1)">Delivery</div>
+            <div style="font-size:.78rem;color:var(--ink3)">Morning email with recommendations and running system metrics. Full report archived.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div>
       <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border);font-size:.8rem">
-        <div style="font-weight:600;margin-bottom:.5rem;color:var(--ink2)">Why 13 steps?</div>
-        <p style="margin:.3rem 0;color:var(--ink3)">Each step is independent and fails gracefully. If the debate agent hits a rate limit, the PM still runs without verdicts. If backfill finds no mature decisions, it exits cleanly. The pipeline always produces a report.</p>
-        <p style="margin:.3rem 0;color:var(--ink3)">The measurement steps (6, 9, 13) are what separate this from a signal screener. Every decision is logged, scored, and compared. Strategy changes are evaluated on data, not feel.</p>
+        <div style="font-weight:600;margin-bottom:.5rem;color:var(--ink2)">Built for reliability</div>
+        <p style="margin:.3rem 0;color:var(--ink3)">Each stage is independent and fails gracefully. A slow API call in one step never blocks the rest. The pipeline always produces a report.</p>
+        <p style="margin:.3rem 0;color:var(--ink3)">The measurement stage is what separates this from a signal screener. Every decision is logged, scored against what actually happened, and fed back into the evaluation loop. Strategy changes are judged on data, not feel.</p>
+        <div style="margin-top:.75rem;display:flex;gap:.4rem;flex-wrap:wrap">
+          <span class="badge">runs 7:30am Mon-Fri</span>
+          <span class="badge">cron scheduled</span>
+          <span class="badge">Docker containerised</span>
+          <span class="badge">weekly walk-forward</span>
+        </div>
       </div>
     </div>
   </div>
