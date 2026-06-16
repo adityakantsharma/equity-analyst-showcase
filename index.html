@@ -293,7 +293,7 @@
       <div class="stat-lbl">ML features</div>
     </div>
     <div class="stat">
-      <div class="stat-val">370</div>
+      <div class="stat-val">580</div>
       <div class="stat-lbl">automated tests</div>
     </div>
   </div>
@@ -648,6 +648,18 @@
       <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: right-size dependencies, cost scales with value</div>
     </div>
 
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation integrity over vanity metrics</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Early validation showed strong results. A systematic review found the methodology was overstating performance -- the validation harness was not testing the signals actually being traded, and feature construction introduced look-ahead bias. The honest number was materially lower. The methodology was corrected, the harness tightened, and go-live blocked until the evidence supported it.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: surface the honest number, fix the methodology, delay go-live until the evidence supports it. A system that tells you the truth when results are bad is worth more than one that only tells you the truth when they're good.</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Architectural memory in the repo, not in someone's head</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">CI auto-fixes test failures via Claude Code. But an automated agent that makes tests pass without understanding why an invariant exists will make the wrong fix -- weakening a correctness guarantee instead of fixing the test setup. Architectural decisions and their reasoning are encoded in <code style="font-size:.72rem;background:#f5f5f0;padding:.1rem .3rem;border-radius:3px">CLAUDE.md</code>, which the agent reads before touching anything.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: institutional memory belongs in the repo. Autonomous tooling is only as good as the context it operates in.</div>
+    </div>
+
   </div>
 </section>
 
@@ -678,7 +690,7 @@
     <div style="font-size:.75rem;color:var(--ink3);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em">Infrastructure</div>
     <div class="stack-grid">
       <span class="badge">cron (7:30am daily)</span>
-      <span class="badge">pytest (356 tests)</span>
+      <span class="badge">pytest (580+ tests)</span>
       <span class="badge">GitHub Actions CI</span>
       <span class="badge">Docker + docker-compose</span>
       <span class="badge">python-dotenv</span>
