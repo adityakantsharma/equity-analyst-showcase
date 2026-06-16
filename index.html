@@ -643,9 +643,9 @@
     </div>
 
     <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">NewsAPI replaced with yfinance + Google News RSS</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">The 100 req/day free tier was exhausted by a 48-ticker watchlist. The next tier was $449/month. yfinance .news + Google News RSS covers the same signal for free, with no rate limits and no API key. News is context for the analyst, not the primary signal.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: right-size dependencies, cost scales with value</div>
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation speed as a strategic constraint</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A walk-forward validation run taking 150 minutes isn't just slow -- it stops being used. Strategy decisions get made on intuition when the feedback loop is too long to run regularly. The bottleneck was traced and eliminated at the right layer, reducing validation time from hours to minutes without compromising the correctness guarantees.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: a feedback loop only exists if people use it. Speed is a correctness requirement, not a performance optimisation.</div>
     </div>
 
     <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
