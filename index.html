@@ -279,18 +279,27 @@
     generates ML-scored trade signals, and delivers prioritised research reports with
     specific entry, stop, and target levels  --  before market open.
   </p>
-  <div class="hero-stats">
+  <div style="margin:.75rem 0 1rem;padding:.75rem 1rem;border-left:3px solid var(--accent);background:var(--accent-bg);border-radius:0 6px 6px 0;width:100%;box-sizing:border-box">
+  <p style="font-size:.82rem;color:var(--ink2);line-height:1.6;margin:0;font-style:italic">
+    The hardest part of building AI systems that make consequential decisions
+    is not the AI. It is knowing when to trust it, when to override it, and
+    how to build the measurement infrastructure that tells you which is which.
+    This project exists to answer those questions with data rather than opinion --
+    and to keep asking them every day the system runs.
+  </p>
+</div>
+<div class="hero-stats">
     <div class="stat">
-      <div class="stat-val blue">13</div>
-      <div class="stat-lbl">pipeline steps daily</div>
+      <div class="stat-val blue">48</div>
+      <div class="stat-lbl">stocks monitored daily</div>
     </div>
     <div class="stat">
       <div class="stat-val green">3yr</div>
       <div class="stat-lbl">walk-forward validated</div>
     </div>
     <div class="stat">
-      <div class="stat-val">156</div>
-      <div class="stat-lbl">ML features</div>
+      <div class="stat-val">daily</div>
+      <div class="stat-lbl">never misses a morning</div>
     </div>
     <div class="stat">
       <div class="stat-val">580</div>
@@ -300,6 +309,58 @@
 </div>
 
 <!-- Pipeline -->
+<section style="background:var(--surface2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;border:1px solid var(--border)">
+  <p style="font-size:.85rem;color:var(--ink2);line-height:1.6;margin:0">
+    Most AI systems in finance optimise for signal generation. This one optimises for
+    <strong>decision quality</strong> -- by treating measurement, validation, and honest
+    reporting as first-class engineering concerns, not afterthoughts. Every architectural
+    choice below reflects that priority.
+  </p>
+</section>
+
+<!-- Engineering decisions -->
+<section>
+  <h2>Engineering decisions worth noting</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Champion/Challenger  --  not version-over-time</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Comparing strategy v1 (Jan-Jun) vs v2 (Jun-Dec) conflates strategy quality with market regime. Both see the same candidates on the same day. The comparison signal lives only in divergences.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: apples-to-apples beats historical comparison</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Promotion policy decoupled from engine</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Changing promotion criteria (win rate gap vs R-multiple vs statistical significance) should not require touching the comparison engine. The policy is a swappable Protocol class. Four implementations ship; the default requires both win rate AND avg R to improve.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: interface-first, tight coupling is a maintenance trap</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Bull/Bear debate  --  forced adversarial reasoning</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A single model asked "should I take this trade?" finds reasons to say yes. Separate Bull and Bear instances with assigned stances surface the bear case confirmation bias would suppress. Debate log tracks whether SKIP verdicts actually avoided losers.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: adversarial prompting over single-pass optimism</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation speed as a strategic constraint</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A walk-forward validation run taking 150 minutes isn't just slow -- it stops being used. Strategy decisions get made on intuition when the feedback loop is too long to run regularly. The bottleneck was traced and eliminated at the right layer, reducing validation time from hours to minutes without compromising the correctness guarantees.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: a feedback loop only exists if people use it. Speed is a correctness requirement, not a performance optimisation.</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation integrity over vanity metrics</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Early validation showed strong results. A systematic review found the methodology was overstating performance -- the validation harness was not testing the signals actually being traded, and feature construction introduced look-ahead bias. The honest number was materially lower. The methodology was corrected, the harness tightened, and go-live blocked until the evidence supported it.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: surface the honest number, fix the methodology, delay go-live until the evidence supports it. A system that tells you the truth when results are bad is worth more than one that only tells you the truth when they're good.</div>
+    </div>
+
+    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Architectural memory in the repo, not in someone's head</div>
+      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">CI auto-fixes test failures via Claude Code. But an automated agent that makes tests pass without understanding why an invariant exists will make the wrong fix -- weakening a correctness guarantee instead of fixing the test setup. Architectural decisions and their reasoning are encoded in <code style="font-size:.72rem;background:#f5f5f0;padding:.1rem .3rem;border-radius:3px">CLAUDE.md</code>, which the agent reads before touching anything.</p>
+      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: institutional memory belongs in the repo. Autonomous tooling is only as good as the context it operates in.</div>
+    </div>
+
+  </div>
+</section>
 <section>
   <h2>Daily pipeline  --  runs at 7:30am via cron</h2>
   <div class="two-col">
@@ -604,64 +665,11 @@
       </div>
     </div>
   </section>
-
-  <section style="margin-bottom:0">
-    <h2>ML ensemble  --  48 tickers</h2>
-    <ul class="feature-list">
-      <li><div class="fl-dot blue"></div><div><strong>RF per-ticker</strong>  --  avg AUC 0.534, 23/48 tickers AUC &gt;0.55</div></li>
-      <li><div class="fl-dot blue"></div><div><strong>LightGBM per-ticker</strong>  --  avg AUC 0.550, 24/48 &gt;0.55</div></li>
-      <li><div class="fl-dot blue"></div><div><strong>Panel model</strong>  --  LightGBM + stock fixed effects, 32k rows</div></li>
-      <li><div class="fl-dot green"></div><div>Top features: relative strength, trend spread, and proprietary macro interaction terms</div></li>
-      <li><div class="fl-dot green"></div><div>Walk-forward validation every Friday  --  19 robust, 15 moderate, 14 overfit tickers</div></li>
-    </ul>
-  </section>
 </div>
 
 <br>
 
-<!-- Tech stack -->
-<section>
-  <h2>Engineering decisions worth noting</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
 
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Champion/Challenger  --  not version-over-time</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Comparing strategy v1 (Jan-Jun) vs v2 (Jun-Dec) conflates strategy quality with market regime. Both see the same candidates on the same day. The comparison signal lives only in divergences.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: apples-to-apples beats historical comparison</div>
-    </div>
-
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Promotion policy decoupled from engine</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Changing promotion criteria (win rate gap vs R-multiple vs statistical significance) should not require touching the comparison engine. The policy is a swappable Protocol class. Four implementations ship; the default requires both win rate AND avg R to improve.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: interface-first, tight coupling is a maintenance trap</div>
-    </div>
-
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Bull/Bear debate  --  forced adversarial reasoning</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A single model asked "should I take this trade?" finds reasons to say yes. Separate Bull and Bear instances with assigned stances surface the bear case confirmation bias would suppress. Debate log tracks whether SKIP verdicts actually avoided losers.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: adversarial prompting over single-pass optimism</div>
-    </div>
-
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation speed as a strategic constraint</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">A walk-forward validation run taking 150 minutes isn't just slow -- it stops being used. Strategy decisions get made on intuition when the feedback loop is too long to run regularly. The bottleneck was traced and eliminated at the right layer, reducing validation time from hours to minutes without compromising the correctness guarantees.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: a feedback loop only exists if people use it. Speed is a correctness requirement, not a performance optimisation.</div>
-    </div>
-
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Validation integrity over vanity metrics</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">Early validation showed strong results. A systematic review found the methodology was overstating performance -- the validation harness was not testing the signals actually being traded, and feature construction introduced look-ahead bias. The honest number was materially lower. The methodology was corrected, the harness tightened, and go-live blocked until the evidence supported it.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: surface the honest number, fix the methodology, delay go-live until the evidence supports it. A system that tells you the truth when results are bad is worth more than one that only tells you the truth when they're good.</div>
-    </div>
-
-    <div style="background:var(--surface);border-radius:8px;padding:1rem;border:1px solid var(--border)">
-      <div style="font-weight:600;font-size:.85rem;margin-bottom:.4rem">Architectural memory in the repo, not in someone's head</div>
-      <p style="font-size:.78rem;color:var(--ink3);margin:.3rem 0">CI auto-fixes test failures via Claude Code. But an automated agent that makes tests pass without understanding why an invariant exists will make the wrong fix -- weakening a correctness guarantee instead of fixing the test setup. Architectural decisions and their reasoning are encoded in <code style="font-size:.72rem;background:#f5f5f0;padding:.1rem .3rem;border-radius:3px">CLAUDE.md</code>, which the agent reads before touching anything.</p>
-      <div style="font-size:.72rem;color:var(--ink3);margin-top:.5rem;padding:.4rem .6rem;background:#f5f5f0;border-radius:4px">Decision: institutional memory belongs in the repo. Autonomous tooling is only as good as the context it operates in.</div>
-    </div>
-
-  </div>
-</section>
 
 <section>
   <h2>Tech stack</h2>
@@ -753,16 +761,7 @@
   </div>
 </section>
 
-<!-- Quote -->
-<div class="quote-block">
-  <strong>What I learned:</strong> Building a production ML trading system end-to-end  -- 
-  from raw price data to actionable signals  --  requires as much work on data quality,
-  signal validation, and walk-forward testing as on the models themselves.
-  The highest-edge strategy uses a small set of confirmed signals,
-  not the full ML feature set. <strong>Claude acts as the synthesis layer</strong>,
-  turning structured signal data into a coherent trade thesis with specific levels.
-  Adding MLflow and FastAPI transformed the project from a batch script into a deployable ML service.
-</div>
+
 
 <footer>
   equity-analyst · Aditya Kant Sharma · Built 2025–2026 · Python + Claude (Anthropic)
